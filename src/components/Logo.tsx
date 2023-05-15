@@ -1,10 +1,7 @@
 import React, { FC } from 'react';
 import { motion } from 'framer-motion';
 
-type Props = {
-  text: string;
-};
-const Logo: FC<Props> = ({ text }) => {
+const Logo: FC<{}> = () => {
   const svgVariants = {
     hidden: { rotate: -180 },
     visible: {
