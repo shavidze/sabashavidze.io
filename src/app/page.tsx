@@ -1,10 +1,22 @@
-export default function Home() {
+import Image from 'next/image';
+import { about, name, avatar } from '../lib/about-me';
+
+const Home = () => {
   return (
-    <main
-      className="
-    flex min-h-screen flex-col items-center justify-between p-24"
-    >
-      home
-    </main>
+    <section>
+      <h1 className="font-bold text-3xl mb-8">{name}</h1>
+      <Image
+        alt={name}
+        className="rounded-full  "
+        src={avatar}
+        placeholder="blur"
+        width={100}
+        priority
+      />
+      <p className="my-5 max-w-[460px] text-neutral-800 dark:text-neutral-200">
+        {about()}
+      </p>
+    </section>
   );
-}
+};
+export default Home;
