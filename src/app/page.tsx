@@ -4,7 +4,7 @@ import { about, name, avatar } from '../lib/about-me';
 const Home = () => {
   return (
     <section>
-      <h1 className="font-bold text-3xl mb-8">{name}</h1>
+      <h1 className="font-bold text-3xl mb-8 font-serif">{name}</h1>
       <Image
         alt={name}
         className="rounded-full  "

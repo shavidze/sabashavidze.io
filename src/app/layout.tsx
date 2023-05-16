@@ -7,6 +7,7 @@ const inter = Kaisei_Tokumin({
   style: ['normal'],
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-kaisei',
 });
 
 export const metadata = {
@@ -18,11 +19,11 @@ export const metadata = {
   openGraph: {
     title: 'Saba Shavidze',
     description: 'Developer, writer, and creator.',
-    url: 'https://leerob.io',
-    siteName: 'Lee Robinson',
+    url: 'https://sabashavidze.io',
+    siteName: 'Saba Shavidze',
     images: [
       {
-        url: 'https://leerob.io/og.jpg',
+        url: 'https://sabashavidze.io/og.jpg',
         width: 1920,
         height: 1080,
       },
@@ -38,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" className={inter.variable}>
       <body className="antialiased max-w-4xl mb-40 flex flex-col md:flex-row mx-4 mt-8 md:mt-20 lg:mt-32 lg:mx-auto">
         <Navbar />
         {children}

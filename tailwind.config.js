@@ -7,6 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: { serif: ['var(--font-kaisei)'] },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -14,5 +15,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-}
+  plugins: [require('@tailwindcss/typography')],
+};
