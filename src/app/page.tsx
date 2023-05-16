@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import { about, name, avatar } from '../lib/about-me';
+import HelloWorld from '../../content/hello.mdx';
 
 const Home = () => {
   return (
@@ -16,6 +19,7 @@ const Home = () => {
       <p className="my-5 max-w-[460px] text-neutral-800 dark:text-neutral-200">
         {about()}
       </p>
+      <HelloWorld />
     </section>
   );
 };
