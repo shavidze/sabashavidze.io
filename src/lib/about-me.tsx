@@ -20,8 +20,8 @@ export const About = () => {
       journey extends beyond traditional programming as I delve into the
       fascinating realms of blockchain technology, functional programming
       paradigms, and distributed systems. Additionally, I make it a point to
-      stay abreast of the latest trends in the ever-evolving world of
-      programming.
+      stay abreast of the latest trends in the ever-evolving world of software
+      engineering.
     </>
   );
 };
