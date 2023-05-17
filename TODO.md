@@ -6,4 +6,4 @@
 * [x] build home page
   * [x] style header 
   * [x] style hero content
-  
+  * [x] add sweet animations to texts
