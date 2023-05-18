@@ -13,5 +13,9 @@ install: package.json ## install dependencies
 		npm --frozen-lockfile; \
 	fi
 
-run: ## run dev 
+run: ## run the develpment server
 	@npm run dev
+
+prettier: ## prettify the source code using prettier
+	@echo "Running prettier..."
+	@npm run prettier
