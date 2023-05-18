@@ -19,3 +19,7 @@ run: ## run the develpment server
 prettier: ## prettify the source code using prettier
 	@echo "Running prettier..."
 	@npm run prettier
+
+lint: ## lint the code and check coding conventions
+	@echo "Running linter..."
+	@npm run lint

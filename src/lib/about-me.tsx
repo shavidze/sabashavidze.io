@@ -15,7 +15,7 @@ export const avatar = me;
 export const About = () => {
   return (
     <>
-      I'm Saba. I'm the
+      I&apos;m Saba. I&apos;m the
       <b> Software Engineer </b> with a strong interest in web development. My
       journey extends beyond traditional programming as I delve into the
       fascinating realms of blockchain technology, functional programming

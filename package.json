@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "prettier": "prettier --config ./.prettierrc.cjs --write --list-different \"src/**/*.{js,ts,tsx}\" ",
-    "lint": "next lint"
+    "lint": "eslint --ext .js,ts,.tsx \"src/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
     "@tabler/icons-react": "^2.18.0",
