@@ -4,11 +4,13 @@
 
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import Image from 'next/image';
+import Admotion from './Admotion';
 import CustomLink from './CustomLink';
 import InfoCard from './InfoCard';
 
 const components = {
   InfoCard,
+  Admotion,
   a: CustomLink,
   Image: ({ props }) => (
     <Image alt={props.alt} className="rounded-lg" {...props} />
