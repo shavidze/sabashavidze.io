@@ -2,7 +2,6 @@ import { allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
-import { useMDXComponent } from 'next-contentlayer/hooks';
 import { Mdx } from '@/components/mdx/mdx';
 
 type Props = {
