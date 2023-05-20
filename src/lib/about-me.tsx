@@ -101,7 +101,7 @@ export const Bio: FC<{}> = () => {
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
-              <IconBrandTwitterFilled fill="#4299e1" />
+              <IconBrandTwitterFilled />
               <div className="ml-3">Twitter</div>
             </div>
             <IconArrowUpRight />
@@ -125,7 +125,7 @@ export const Bio: FC<{}> = () => {
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
-              <IconBrandLinkedin fill="#0077b5" color="white" />
+              <IconBrandLinkedin color="white" />
               <div className="ml-3">Linkedin</div>
             </div>
             <IconArrowUpRight />

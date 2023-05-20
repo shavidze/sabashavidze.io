@@ -38,9 +38,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  console.log('ager a', JSON.stringify(inter, null, 3));
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased max-w-4xl mb-40 flex flex-col md:flex-row mx-4 mt-8 md:mt-20 lg:mt-32 lg:mx-auto">
+      <body
+        suppressHydrationWarning={true}
+        className="antialiased max-w-4xl mb-40 flex flex-col md:flex-row mx-4 mt-8 md:mt-20 lg:mt-32 lg:mx-auto"
+      >
         <Navbar />
         {children}
       </body>
