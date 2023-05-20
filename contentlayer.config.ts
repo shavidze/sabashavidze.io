@@ -1,4 +1,7 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 
 const Post = defineDocumentType(() => ({
   name: 'Post',
@@ -49,8 +52,28 @@ const Post = defineDocumentType(() => ({
     },
   },
 }));
+const rehypePrettyCodeOptions = {
+  theme: 'one-dark-pro',
+  onVisitLine(node) {
+    if (node.children.length === 0) {
+      node.children = [{ type: 'text', value: ' ' }];
+    }
+  },
+  onVisitHighlightedLine(node) {
+    // Each line node by default has `class="line"`.
+    node.properties.className.push('highlighted');
+  },
+  onVisitHighlightedWord(node) {
+    // Each word node has no className by default.
+    node.properties.className = ['word'];
+  },
+};
 
 export default makeSource({
   contentDirPath: 'posts',
   documentTypes: [Post],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug, [rehypePrettyCode, rehypePrettyCodeOptions]],
+  },
 });

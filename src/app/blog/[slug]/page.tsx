@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
 import { useMDXComponent } from 'next-contentlayer/hooks';
+import { Mdx } from '@/components/mdx/mdx';
 
 type Props = {
   params: { slug: string };
@@ -20,14 +21,12 @@ const BlogPost: FC<Props> = ({ params }) => {
   if (!post) {
     notFound();
   }
-  const MDXContent = useMDXComponent(post.body.code);
-  console.log(MDXContent);
 
   return (
     <section>
-      <script type="application/ld+json">
+      {/* <script type="application/ld+json">
         {JSON.stringify(post.structuredData)}
-      </script>
+      </script> */}
       <h1 className="font-bold text-3xl font-serif max-w-[650px]">
         <Balancer>{post.title}</Balancer>
       </h1>
@@ -39,8 +38,7 @@ const BlogPost: FC<Props> = ({ params }) => {
         {/* <ViewCounter slug={post.slug} trackView /> */}
       </div>
       <>
-        <MDXContent />
-        {/* <Mdx code={post.body.code} tweets={tweets} /> */}
+        <Mdx code={post.body.code} />
       </>
     </section>
   );

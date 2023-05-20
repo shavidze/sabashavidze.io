@@ -1,6 +1,6 @@
 import './globals.css';
 import { Kaisei_Tokumin } from 'next/font/google';
-import Navbar from '../components/NavBar';
+import Navbar from '../components/Navigation/Navbar';
 
 const inter = Kaisei_Tokumin({
   weight: ['400', '700'],
@@ -38,7 +38,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log('ager a', JSON.stringify(inter, null, 3));
   return (
     <html lang="en" className={inter.variable}>
       <body
