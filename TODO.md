@@ -18,4 +18,4 @@
 
  
 * [x] Build MDX Component
- * [x] 
+ * [x] Create Custom Components and support to mdx 
