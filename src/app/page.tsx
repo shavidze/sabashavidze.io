@@ -31,7 +31,7 @@ const Home = () => {
         animate="visible"
         className="my-5 max-w-[460px] text-neutral-800 dark:text-neutral-200"
       >
-        {/* <About /> */}
+        <About />
       </motion.p>
     </section>
   );

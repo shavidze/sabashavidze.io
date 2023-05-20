@@ -7,3 +7,9 @@
   * [x] style header 
   * [x] style hero content
   * [x] add sweet animations to texts
+
+* [x] Setup Contentlayer
+ * [x] define document item with fields 
+ * [x] define computed fields: slug
+ * [x] define structured data fields to improve search engine visiblity and enhance discovery.
+ 
