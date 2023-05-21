@@ -41,6 +41,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-If you have any questions or want to get in touch, you can reach me through the contact form on [sabashavidze.io](https://sabashavidze.io) or connect with me on [LinkedIn](https://www.linkedin.com/in/saba-shavidze-1b395094/)) or [Twitter](https://twitter.com/SShavi1).
+If you have any questions or want to get in touch, you can reach me through the contact form on [sabashavidze.io](https://sabashavidze.io) or connect with me on [LinkedIn](https://www.linkedin.com/in/saba-shavidze-1b395094/) or [Twitter](https://twitter.com/SShavi1).
 
 Thank you for visiting my personal website repository!
