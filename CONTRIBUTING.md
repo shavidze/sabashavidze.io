@@ -70,6 +70,6 @@ By contributing to the sabashavidze.io project, you agree that your contribution
 If you have any questions or need further assistance, feel free to reach out through the contact form on [sabashavidze.io](https://sabashavidze.io) or connect with me on [LinkedIn](https://linkedin.com/in/your-linkedin-profile) or [Twitter](https://twitter.com/your-twitter-profile).
 
 We appreciate your contributions to sabashavidze.io and look forward to your involvement!
-```
+
 
 Feel free to customize and modify this CONTRIBUTING.md template to fit your specific project guidelines and requirements.
