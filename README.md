@@ -27,8 +27,20 @@ npm run dev
 ```
 
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The website is deployed and hosted on [sabashavidze.io](https://sabashavidze.io). You can visit the live website to explore its content and features.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+
+Contributions to this repository are currently not open. However, if you find any issues or have suggestions for improvements, feel free to [open an issue](https://github.com/shavidze/sabashavidze.io/issues). Your feedback is greatly appreciated.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contact
+
+If you have any questions or want to get in touch, you can reach me through the contact form on [sabashavidze.io](https://sabashavidze.io) or connect with me on [LinkedIn](https://www.linkedin.com/in/saba-shavidze-1b395094/)) or [Twitter](https://twitter.com/SShavi1).
+
+Thank you for visiting my personal website repository!
