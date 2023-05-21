@@ -1,6 +1,4 @@
-Certainly! Here's a suggested template for the CONTRIBUTING.md file:
 
-```
 # Contributing to sabashavidze.io
 
 Thank you for considering contributing to the sabashavidze.io project! Contributions are valuable and greatly appreciated. This document provides guidelines to help you contribute effectively.
