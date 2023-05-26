@@ -1,7 +1,5 @@
 /* eslint-disable import/prefer-default-export */
 
-'use client';
-
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import Image from 'next/image';
 import Admotion from './Admotion';
@@ -9,12 +7,13 @@ import CustomLink from './CustomLink';
 import InfoCard from './InfoCard';
 
 const components = {
+  a: CustomLink,
+  Image: (props) => {
+    console.log('prooooops - ', props);
+    return <Image alt={props.alt} className="rounded-lg" {...props} />;
+  },
   InfoCard,
   Admotion,
-  a: CustomLink,
-  Image: ({ props }) => (
-    <Image alt={props.alt} className="rounded-lg" {...props} />
-  ),
 };
 
 interface MdxProps {
