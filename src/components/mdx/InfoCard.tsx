@@ -1,12 +1,11 @@
 import clsx from 'clsx';
-import { FC } from 'react';
 
 type Props = {
   type: 'success' | 'fail';
   title: string;
   messages: string[];
 };
-const InfoCard: FC<Props> = ({ type, title, messages }) => {
+const InfoCard = ({ type, title, messages }: Props) => {
   const cssClasses = clsx(
     'border bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-4 w-full',
     {

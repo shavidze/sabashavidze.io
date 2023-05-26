@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
 import { Mdx } from '@/components/mdx/mdx';
+import { Metadata } from 'next';
 
 type Props = {
   params: { slug: string };
@@ -13,6 +15,35 @@ export async function generateStaticParams() {
     slug: post.slug,
   }));
 }
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata | undefined> {
+  const post = allPosts.find((post) => post.slug === params.slug);
+  if (!post) {
+    return;
+  }
+
+  const {
+    title,
+    publishedAt: publishedTime,
+    summary: description,
+    slug,
+  } = post;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      publishedTime,
+      url: `https://sabashavidze.io/blog/${slug}`,
+    },
+  };
+}
+
 const BlogPost: FC<Props> = ({ params }) => {
   const { slug } = params;
   // eslint-disable-next-line @typescript-eslint/no-shadow
