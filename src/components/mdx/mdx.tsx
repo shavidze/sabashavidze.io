@@ -8,8 +8,7 @@ import InfoCard from './InfoCard';
 
 const components = {
   a: CustomLink,
-  Image: (props) => {
-    console.log('prooooops - ', props);
+  Image: (props: any) => {
     return <Image alt={props.alt} className="rounded-lg" {...props} />;
   },
   InfoCard,
@@ -25,7 +24,7 @@ export const Mdx = ({ code }: MdxProps) => {
   const Component = useMDXComponent(code);
   return (
     <article className="prose prose-quoteless prose-neutral dark:prose-invert ">
-      <Component components={components} />
+      <Component components={{ ...components }} />
     </article>
   );
 };
