@@ -2,13 +2,13 @@
 
 import {
   IconArrowUpRight,
-  IconBrandGithubFilled,
+  IconBrandGithub,
   IconBrandLinkedin,
-  IconBrandTwitterFilled,
+  IconBrandTwitter,
 } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import { FC } from 'react';
-import * as me from '../app/avatar.jpeg';
+import * as me from '../app/avatar.png';
 
 export const name = 'Saba Shavidze';
 export const avatar = me;
@@ -74,7 +74,7 @@ export const Bio: FC<{}> = () => {
         </motion.p>
         <hr />
         <motion.p variants={item}>
-          Furthermore, my passion for <b>algorithms and data structures</b>
+          Furthermore, my passion for <b>algorithms and data structures </b>
           enhances my ability to develop efficient and performant web
           applications. I continuously strive to optimize code and explore
           innovative approaches to problem-solving. With my comprehensive skill
@@ -101,7 +101,7 @@ export const Bio: FC<{}> = () => {
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
-              <IconBrandTwitterFilled />
+              <IconBrandTwitter fill="#0077B5" stroke={0} size={20} />
               <div className="ml-3">Twitter</div>
             </div>
             <IconArrowUpRight />
@@ -113,8 +113,8 @@ export const Bio: FC<{}> = () => {
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
-              <IconBrandGithubFilled />
-              <div className="ml-3">GitHub</div>
+              <IconBrandGithub size={20} fill="#00000" />
+              <div className="ml-3 no-underline">GitHub</div>
             </div>
             <IconArrowUpRight />
           </a>
@@ -125,7 +125,7 @@ export const Bio: FC<{}> = () => {
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
-              <IconBrandLinkedin color="white" />
+              <IconBrandLinkedin fill="#0077b5" color="#ffffff" stroke={2} />
               <div className="ml-3">Linkedin</div>
             </div>
             <IconArrowUpRight />
