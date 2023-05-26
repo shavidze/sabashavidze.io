@@ -17,4 +17,5 @@
     * [x] setup [rehype-pretty-code-plugin](https://rehype-pretty-code.netlify.app/)
 
 * [x] Build MDX Component
- * [x] Create Custom Components and support to mdx 
+ * [x] Create Custom Components and support to mdx
+
