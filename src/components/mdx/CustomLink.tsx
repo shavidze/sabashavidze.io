@@ -1,10 +1,6 @@
 import Link from 'next/link';
 
-type Props = {
-  href: any;
-  children: any;
-};
-const CustomLink = (props: Props) => {
+const CustomLink = (props: any) => {
   const { href, children } = props;
   if (href.startsWith('/')) {
     return <Link {...props}>{props.children}</Link>;

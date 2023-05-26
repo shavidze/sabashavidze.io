@@ -21,7 +21,7 @@ export async function generateMetadata({
 }: Props): Promise<Metadata | undefined> {
   const post = allPosts.find((post) => post.slug === params.slug);
   if (!post) {
-    return;
+    return {};
   }
 
   const {

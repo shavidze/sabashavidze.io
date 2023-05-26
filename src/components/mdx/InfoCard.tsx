@@ -1,11 +1,7 @@
 import clsx from 'clsx';
 
-type Props = {
-  type: 'success' | 'fail';
-  title: string;
-  messages: string[];
-};
-const InfoCard = ({ type, title, messages }: Props) => {
+const InfoCard = (props: any) => {
+  const { type, messages, title } = props;
   const cssClasses = clsx(
     'border bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-4 w-full',
     {
@@ -17,7 +13,7 @@ const InfoCard = ({ type, title, messages }: Props) => {
     <div className={cssClasses}>
       <span>{`You might use ${title} if...`}</span>
       <div className="mt-4">
-        {messages.map((message) => (
+        {messages.map((message: any) => (
           <div key={message} className="flex font-medium items-baseline mb-2">
             <div className="h-4 w-4 mr-2">
               <svg className="h-4 w-4 text-emerald-500" viewBox="0 0 24 24">
