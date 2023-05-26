@@ -1,2 +1,49 @@
+name: General Issue
+about: Create a general issue to report a bug, request a feature, or ask a question.
 
-  
+title: ''
+labels: ''
+assignees: ''
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Issue Description
+
+        <!-- Provide a clear and concise description of the issue or request -->
+
+  - type: input
+    id: steps
+    attributes:
+      label: Steps to Reproduce (for bugs)
+      description: |
+        <!-- If reporting a bug, provide steps to reproduce the issue -->
+        <!-- If requesting a feature, describe the desired behavior -->
+        <!-- If asking a question, provide any relevant details -->
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment (if applicable)
+      description: |
+        <!-- If reporting a bug, provide information about your environment (e.g., browser, device, OS) -->
+        <!-- If requesting a feature, specify any environment requirements -->
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: |
+        <!-- Choose the relevant options by replacing [ ] with [x] -->
+        - [ ] I have read the contribution guidelines.
+        - [ ] I have searched for existing issues and confirmed that this is a new issue.
+        - [ ] This issue is not related to support or usage questions (use appropriate channels for that).
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: |
+        <!-- Provide any additional information, screenshots, or examples that may be helpful -->
+
