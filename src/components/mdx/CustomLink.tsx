@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -17,10 +15,6 @@ const CustomLink: FC<Props> = (props) => {
     return <a {...props} />;
   }
 
-  return (
-    <Link href={href} {...children}>
-      {children}
-    </Link>
-  );
+  return <Link {...props}>{children}</Link>;
 };
 export default CustomLink;
