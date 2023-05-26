@@ -19,3 +19,4 @@
 * [x] Build MDX Component
  * [x] Create Custom Components and support to mdx
 
+* [x] Build blog page
