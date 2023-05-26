@@ -3,6 +3,7 @@ import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 const Post = defineDocumentType(() => ({
   name: 'Post',
@@ -75,6 +76,17 @@ export default makeSource({
   documentTypes: [Post],
   mdx: {
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeSlug, [rehypePrettyCode, rehypePrettyCodeOptions]],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypePrettyCode, rehypePrettyCodeOptions],
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ['anchor'],
+          },
+        },
+      ],
+    ],
   },
 });
