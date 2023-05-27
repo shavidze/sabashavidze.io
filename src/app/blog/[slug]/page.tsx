@@ -5,7 +5,6 @@ import { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
 import { Mdx } from '@/components/mdx/mdx';
 import { Metadata } from 'next';
-import { type } from 'os';
 
 type Props = {
   params: { slug: string };
@@ -25,7 +24,6 @@ export async function generateMetadata({
     return;
   }
   const PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
-  console.log(PUBLIC_URL);
   const {
     title,
     publishedAt: publishedTime,
