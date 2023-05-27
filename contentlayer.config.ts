@@ -5,6 +5,8 @@ import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
+const PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
+
 const Post = defineDocumentType(() => ({
   name: 'Post',
   contentType: 'mdx',
@@ -34,7 +36,7 @@ const Post = defineDocumentType(() => ({
       },
     },
     structuredData: {
-      type: 'list',
+      type: 'json',
       resolve: (doc) => ({
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
@@ -43,9 +45,9 @@ const Post = defineDocumentType(() => ({
         dateModified: doc.publishedAt,
         description: doc.summary,
         image: doc.image
-          ? `https://sabashavidze.io/${doc.image}`
-          : `https://sabashavidze.io/api/og?title=${doc.title}`,
-        url: `https://sabashavidze.io/blog/${doc._raw.flattenedPath}`,
+          ? `${PUBLIC_URL}${doc.image}`
+          : `${PUBLIC_URL}api/og?title=${doc.title}`,
+        url: `${PUBLIC_URL}/blog/${doc._raw.flattenedPath}`,
         author: {
           '@type': 'Person',
           name: 'Saba Shavidze',
