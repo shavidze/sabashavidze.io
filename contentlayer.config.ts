@@ -3,6 +3,7 @@ import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
+import rehypeColorChips from 'rehype-color-chips';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 const PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
@@ -89,6 +90,7 @@ export default makeSource({
           },
         },
       ],
+      rehypeColorChips,
     ],
   },
 });
