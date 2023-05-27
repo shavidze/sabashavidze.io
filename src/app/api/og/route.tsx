@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       flexDirection: 'column',
       alignItems: 'flex-start',
       justifyContent: 'center',
-      backgroundImage: `url(${PUBLIC_URL})`,
+      backgroundImage: `url(${PUBLIC_URL}og-bg.png)`,
     },
     styleTitle: {
       marginLeft: 190,
