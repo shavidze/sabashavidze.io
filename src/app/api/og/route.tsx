@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const postTitle = searchParams.get('title');
   const fontData = await font;
+  const PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
   const styles: { styleImg: CSSProperties; styleTitle: CSSProperties } = {
     styleImg: {
       height: '100%',
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
       flexDirection: 'column',
       alignItems: 'flex-start',
       justifyContent: 'center',
-      backgroundImage: 'url(http://localhost:3000/og-bg.png)',
+      backgroundImage: `url(${PUBLIC_URL})`,
     },
     styleTitle: {
       marginLeft: 190,
