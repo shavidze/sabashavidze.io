@@ -1,0 +1,31 @@
+# This workflow will automate the PR title generation for 
+# develop to main branch pull request
+
+name: Generate PR Title
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  generate-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Generate PR Title
+        run: |
+          # Extract branch names
+          branch_from=$(git rev-parse --abbrev-ref HEAD)
+          branch_to=$(echo "${GITHUB_REF#refs/pull/}/merge" | cut -d'/' -f3)
+
+          # Extract feature name from branch name
+          feature_name=$(echo "$branch_from" | sed -n 's/^feature\///p')
+
+          # Construct the PR title
+          pr_title="Merge $feature_name from $branch_from to $branch_to"
+
+          # Set the PR title
+          echo "::set-output name=title::$pr_title"
+
