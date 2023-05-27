@@ -33,7 +33,7 @@ export async function generateMetadata({
   } = post;
   const ogImage = image
     ? `${PUBLIC_URL}${image}`
-    : `${PUBLIC_URL}/api/og?title=${title}`;
+    : `${PUBLIC_URL}api/og?title=${title}`;
   // eslint-disable-next-line consistent-return
   return {
     title,
