@@ -30,3 +30,29 @@ body {
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
 }
+.prose :where(code):not(:where([class~='not-prose'] *)) {
+  font-size: 1rem;
+  color: #555151;
+}
+.prose :where(code):not(:where([class~='not-prose'] *))::before {
+  content: '' !important;
+}
+.prose :where(code):not(:where([class~='not-prose'] *))::after {
+  content: '' !important;
+}
+
+[data-rehype-pretty-code-title] {
+  @apply text-xs font-mono border rounded-t-lg text-neutral-200 border-[#333333] bg-[#353434] px-4 py-3;
+}
+[data-rehype-pretty-code-title] + pre {
+  @apply mt-0 rounded-none bg-[#1f1f1f];
+}
+
+.gfm-color-chip {
+  margin-left: 0.125rem;
+  display: inline-block;
+  height: 0.625rem;
+  width: 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid gray;
+}
