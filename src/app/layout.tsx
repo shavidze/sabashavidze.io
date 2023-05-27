@@ -10,6 +10,7 @@ const inter = Kaisei_Tokumin({
   variable: '--font-kaisei',
 });
 
+const PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
 export const metadata = {
   title: {
     default: 'Saba Shavidze',
@@ -19,11 +20,11 @@ export const metadata = {
   openGraph: {
     title: 'Saba Shavidze',
     description: 'Developer, writer, and creator.',
-    url: 'https://sabashavidze.io',
+    url: `${PUBLIC_URL}`,
     siteName: 'Saba Shavidze',
     images: [
       {
-        url: 'https://sabashavidze.io/og.jpg',
+        url: `${PUBLIC_URL}og.png`,
         width: 1920,
         height: 1080,
       },

@@ -5,6 +5,7 @@ import { FC } from 'react';
 import Balancer from 'react-wrap-balancer';
 import { Mdx } from '@/components/mdx/mdx';
 import { Metadata } from 'next';
+import { type } from 'os';
 
 type Props = {
   params: { slug: string };
@@ -21,16 +22,21 @@ export async function generateMetadata({
 }: Props): Promise<Metadata | undefined> {
   const post = allPosts.find((post) => post.slug === params.slug);
   if (!post) {
-    return {};
+    return;
   }
-
+  const PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
+  console.log(PUBLIC_URL);
   const {
     title,
     publishedAt: publishedTime,
     summary: description,
     slug,
+    image,
   } = post;
-
+  const ogImage = image
+    ? `${PUBLIC_URL}${image}`
+    : `${PUBLIC_URL}/api/og?title=${title}`;
+  // eslint-disable-next-line consistent-return
   return {
     title,
     description,
@@ -39,7 +45,8 @@ export async function generateMetadata({
       description,
       type: 'article',
       publishedTime,
-      url: `https://sabashavidze.io/blog/${slug}`,
+      url: `${PUBLIC_URL}blog/${slug}`,
+      images: [{ url: ogImage }],
     },
   };
 }
@@ -54,9 +61,11 @@ const BlogPost: FC<Props> = ({ params }) => {
 
   return (
     <section>
-      {/* <script type="application/ld+json">
-        {JSON.stringify(post.structuredData)}
-      </script> */}
+      {typeof window !== 'undefined' && (
+        <script type="application/ld+json">
+          {JSON.stringify(post.structuredData)}
+        </script>
+      )}
       <h1 className="font-bold text-3xl font-serif max-w-[650px]">
         <Balancer>{post.title}</Balancer>
       </h1>
