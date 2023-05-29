@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = ['', '/about', '/blog'].map((route) => {
     return {
-      url: `https://sabashavidze.io/${route}`,
+      url: `https://sabashavidze.io${route}`,
       lastModified: new Date().toISOString().split('T')[0],
     };
   });
