@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
+  --foreground-rgb: 0, 0, 0; /* black */
+  --background-start-rgb: 255, 255, 255; /* white */
   --background-end-rgb: 255, 255, 255;
 }
 
@@ -18,13 +18,16 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to right, #bdc3c7, rgb(var(--background-end-rgb)))
+  background: linear-gradient(to left, #2980b9, rgb(var(--background-end-rgb)))
     rgb(var(--background-start-rgb));
 }
 
 .prose > p {
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
+}
+.prose a {
+  @apply no-underline;
 }
 .prose :where(code):not(:where([class~='not-prose'] *)) {
   font-size: 1rem;

@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  IconArrowUpRight,
   IconBrandGithub,
   IconBrandLinkedin,
   IconBrandTwitter,
@@ -9,9 +8,11 @@ import {
 import { motion } from 'framer-motion';
 import { FC } from 'react';
 import * as me from '../app/avatar.png';
+import LinkItem from './ui/LinkItem';
 
 export const name = 'Saba Shavidze';
 export const avatar = me;
+
 export const About = () => {
   return (
     <>
@@ -40,6 +41,10 @@ export const Bio: FC<{}> = () => {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
   };
+
+  const LinkItemStyle =
+    'flex w-full border border-neutral-800 dark:border-neutral-200 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between';
+
   return (
     <>
       <motion.div
@@ -94,42 +99,18 @@ export const Bio: FC<{}> = () => {
           variants={item}
           className="flex flex-col gap-2 md:flex-row md:gap-2"
         >
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://twitter.com/SShavi1"
-            className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
-          >
-            <div className="flex items-center">
-              <IconBrandTwitter fill="#0077B5" stroke={0} size={20} />
-              <div className="ml-3">Twitter</div>
-            </div>
-            <IconArrowUpRight />
-          </a>
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://github.com/shavidze"
-            className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
-          >
-            <div className="flex items-center">
-              <IconBrandGithub size={20} fill="#00000" />
-              <div className="ml-3 no-underline">GitHub</div>
-            </div>
-            <IconArrowUpRight />
-          </a>
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
+          <LinkItem href="https://twitter.com/SShavi1" style={LinkItemStyle}>
+            <IconBrandTwitter fill="#0077B5" stroke={0} size={20} />
+          </LinkItem>
+          <LinkItem href="https://github.com/shavidze" style={LinkItemStyle}>
+            <IconBrandGithub size={20} fill="#00000" />
+          </LinkItem>
+          <LinkItem
             href="https://www.linkedin.com/in/saba-shavidze-1b395094/"
-            className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
+            style={LinkItemStyle}
           >
-            <div className="flex items-center">
-              <IconBrandLinkedin fill="#0077b5" color="#ffffff" stroke={2} />
-              <div className="ml-3">Linkedin</div>
-            </div>
-            <IconArrowUpRight />
-          </a>
+            <IconBrandLinkedin fill="#0077b5" color="#ffffff" stroke={2} />
+          </LinkItem>
         </motion.div>
       </motion.div>
     </>
