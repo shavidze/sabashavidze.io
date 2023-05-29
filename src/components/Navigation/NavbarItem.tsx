@@ -14,9 +14,9 @@ const NavbarItem: FC<Props> = ({ isActive, name, path }) => {
       key={path}
       href={path}
       className={clsx(
-        'transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
+        'transition-all hover:text-neutral-800 dark:text-neutral-200 dark:hover:text-neutral-200 flex align-middle',
         {
-          'text-neutral-500': !isActive,
+          'text-neutral-800': !isActive,
           'font-bold': isActive,
         }
       )}
