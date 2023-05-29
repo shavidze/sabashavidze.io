@@ -99,13 +99,22 @@ export const Bio: FC<{}> = () => {
           variants={item}
           className="flex flex-col gap-2 md:flex-row md:gap-2"
         >
-          <LinkItem href="https://twitter.com/SShavi1" style={LinkItemStyle}>
+          <LinkItem
+            text="Twitter"
+            href="https://twitter.com/SShavi1"
+            style={LinkItemStyle}
+          >
             <IconBrandTwitter fill="#0077B5" stroke={0} size={20} />
           </LinkItem>
-          <LinkItem href="https://github.com/shavidze" style={LinkItemStyle}>
+          <LinkItem
+            text="Github"
+            href="https://github.com/shavidze"
+            style={LinkItemStyle}
+          >
             <IconBrandGithub size={20} fill="#00000" />
           </LinkItem>
           <LinkItem
+            text="Linkedin"
             href="https://www.linkedin.com/in/saba-shavidze-1b395094/"
             style={LinkItemStyle}
           >
