@@ -16,12 +16,12 @@ export const avatar = me;
 export const About = () => {
   return (
     <>
-      I&rsquo;m Saba, a full-stack Software Engineer with a deep passion for web
-      development. While my expertise lies in traditional programming, my
-      journey expands into exciting frontiers. I embrace cutting-edge
-      technologies, exploring the potential of blockchain, functional
-      programming paradigms, and distributed systems. I thrive on staying
-      updated with the latest trends in the dynamic realm of software
+      I&rsquo;m Saba.I&rsquo;m a full-stack Software Engineer with a deep
+      passion for web development. While my expertise lies in traditional
+      programming, my journey expands into exciting frontiers. I embrace
+      cutting-edge technologies, exploring the potential of blockchain,
+      functional programming paradigms, and distributed systems. I thrive on
+      staying updated with the latest trends in the dynamic realm of software
       engineering, continuously evolving to deliver innovative solutions
     </>
   );
