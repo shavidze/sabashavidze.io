@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js,ts,.tsx \"src/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.15",
     "@tabler/icons-react": "^2.18.0",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "20.1.3",
