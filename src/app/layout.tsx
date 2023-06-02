@@ -1,5 +1,7 @@
 import './globals.css';
 import { Kaisei_Tokumin } from 'next/font/google';
+import NextThemeProvider from '@/app/ThemeProvider';
+import ThemeManager from '@/components/ThemeManager';
 import Navbar from '../components/Navigation/Navbar';
 
 const inter = Kaisei_Tokumin({
@@ -40,13 +42,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body
-        suppressHydrationWarning={true}
-        className="antialiased max-w-4xl mb-40 flex flex-col md:flex-row mx-4 mt-8 md:mt-20 lg:mt-32 lg:mx-auto"
-      >
-        <Navbar />
-        {children}
+    <html
+      suppressHydrationWarning
+      lang="en"
+      className={`${inter.variable} dark`}
+    >
+      <body className="antialiased max-w-4xl mb-40 flex flex-col md:flex-row mx-4 mt-8 md:mt-20 lg:mt-32 lg:mx-auto">
+        <NextThemeProvider>
+          <Navbar />
+          {children}
+          <ThemeManager />
+        </NextThemeProvider>
       </body>
     </html>
   );
