@@ -10,13 +10,13 @@ const ThemeManager = () => {
   const { setTheme } = useTheme();
   const [enabled, setEnabled] = useState(false);
   const DarkIcon = () => (
-    <div className="absolute translate-x-0">
-      <IconMoonFilled />
+    <div className="absolute translate-x-0 rounded-lg bg-white">
+      <IconMoonFilled size={17} />
     </div>
   );
   const LightIcon = () => (
-    <div className="absolute translate-x-5 ">
-      <IconBrightness2 />
+    <div className="absolute translate-x-5 rounded-lg bg-slate-700">
+      <IconBrightness2 size={17} />
     </div>
   );
   return (
@@ -32,7 +32,9 @@ const ThemeManager = () => {
       >
         {() => (
           <button
-            className={`cursor-pointer border motion-reduce:transition-none transition-transform duration-1000 inline-flex h-6 w-11 items-center rounded-full focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2`}
+            className={`${
+              enabled ? 'bg-white' : 'bg-slate-600'
+            } p-[2px] cursor-pointer border motion-reduce:transition-none transition-all duration-[500ms] inline-flex h-6 w-11 items-center rounded-full focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2`}
           >
             {enabled ? <LightIcon /> : <DarkIcon />}
           </button>
