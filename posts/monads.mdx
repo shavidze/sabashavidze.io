@@ -1,0 +1,186 @@
+---
+title: '🧐 🚀 Demystifying Monads: Managing Side Effects with Monads in JavaScript'
+publishedAt: '2023-06-03'
+summary: 'Learn how to manage side effects with monads in JavaScript'
+---
+## What is a Monad❓
+
+
+A monad is a programming concept that is used in functional programming languages. 
+The main idea is to encapsulate computations that contain side effects
+. A monad can be considered as a container or wrapper that stores some value and has 
+methods to transform or compose it into some computations sequentially. 
+To sum up, It is a design pattern that is used to encapsulate and sequence computations, 
+and it is often used to manage side effects in functional programming languages.
+
+
+## What is a side effect?
+
+Imagine that you are a child again. You are in the garden again and you are standing in 
+front of a toy box with lots of toys: 🐣,🪱,🚨,🏍️,🎤. Each of them has its unique ability 
+some make sounds, some light up, some move and some sing. Now let’s say you want to play 
+with one of the toys, but when you take it out of the box and play with it, it affects other 
+toys in the box. Maybe the toy makes a noise that startles the other toys, or maybe it moves 
+around and knocks into other toys. This effect, in programming, we call a side effect, For adult children 🦾.
+It’s like a toy that has a special power that can affect other toys around it.
+
+Let’s bring examples of **_side effects_** that we understand:
+ - [x]  **Making a network request**
+ - [x]  **Updating a database record**
+ - [x]  **Modifying the content of a file**
+
+## The idea of a Monads
+
+The main idea of a Monad is to manage these side effects. This is a way of dealing with side effects
+in a consistent and predictable way so that the functions they use can be composed and combined with each other.
+It is a kind of container, a wrapper for some values. When we use a monad, we store some values in the monad, 
+and we can already do some operations on those values with the methods we describe in the monad.
+
+Here are some specific methods that follow the monadic structure:
+
+ 1. __unit__ or __just__ or __return__: This method takes a value and wraps it in the monad, 
+    creating a new instance of the monad. It's also called __pure__ or __of__ in some languages.
+ 2. __flatMap__ or __bind__ or __chain__: This method applies a function to the value inside the 
+    monad and returns a new instance of the monad. It's used to chain multiple operations on the same monad. For example, the __Promise__ object has a method then() that applies a function to the resolved value and returns a new instance of the Promise monad.
+ 3. __map__: This method applies a function to the value inside the monad and returns a new instance of 
+    the monad with the transformed value. It's used to transform the value without unwrapping and re-wrapping it. 
+	For example, the Array object has a method map() that applies a function to each element in the array and returns a 
+	new instance of the Array monad with the transformed elements.
+
+## Talk is cheap. Show me the code.
+
+### Example 1: SafeDivide
+
+After the theoretical talk, let’s see an example of how it works.
+I created a monad called __Maybe__ that represents a value that may or may not be present. (__null__)
+
+```typescript title="Maybe.ts"
+class Maybe {
+	constructor(value) {
+	  this.value = value;
+	}
+
+	static just(value) {
+	  return new Maybe(value);
+	}
+
+	static nothing() {
+	  return new Maybe(null);
+	}
+
+	isNotValid() {
+	  return this.value === null || this.value === undefined;
+	}
+	map(fn) {
+	  if (this.isNotValid()) {
+	   	return Maybe.nothing();
+	  } else {
+	   	return Maybe.just(fn(this.value));
+	  }
+	}
+
+	chain(fn) {
+	  if (this.isNotValid()) {
+		return Maybe.nothing();
+	  } else {
+		return fn(this.value);
+	  }
+	}
+
+	getOrElse(defaultValue) {
+	  if (this.isNotValid()) {
+	    return defaultValue;
+	  } else {
+	    return this.value;
+	  }
+	}
+}
+```
+
+Let’s walk through this implementation. I have a __Maybe__, a monad that has a __value property__ that represents the value represented by the monad.
+In addition, I have the following methods:
+
+- __just__ — static method, creates and returns a new Maybe monad based on the value passed.
+- __nothing__ — static method, creates and returns a new Maybe monad with no value (null).
+- __isNotValid__ — checks whether the value returned by the monad is invalid.
+- __map__ — is passed to a function: __fn__ and depending on whether the monad pointer is valid or not, applies 
+  this function to the monad’s current value and returns a new monad with the new value.
+- __chain__ — is passed to a function: __fn__ and if the monad value is valid, applies this function to the current monad value 
+  and returns a new monad __fn(this.value)__.
+- __getOrElse__ — is passe defaultValue, which will return if the current monad value is invalid.
+
+Let’s use this monad now. Let’s write a __safeDivide__ function, which will accept __dividend__ and __divisor__ and return __dividend/divisor__.
+We will wrap it in the monad to avoid the side effect. In this case, the only side effect would be division by 0.
+
+
+```ts title="safeDivide.ts"
+// Define a function that returns a Maybe monad
+function safeDivide(dividend, divisor) {
+  if (divisor === 0) {
+    return Maybe.nothing();
+  } else {
+    return Maybe.just(dividend / divisor);
+  }
+}
+```
+
+Let us explain. If the __divisor__ is 0, no division is possible and we return a new __monad__ with __no value__, otherwise, 
+we return a monad **_Maybe(dividend/divisor)_** with a new value.
+
+Let’s look at a concrete example, and it will lead to a chain of several operations.
+
+```ts title='test.ts'
+// Use the Maybe monad to sequence operations that involve division
+const result = Maybe.just(2)
+	.chain(x => safeDivide(10, x))
+	.chain(x => safeDivide(100, x));
+
+// Extract the value from the Maybe monad
+console.log(result.getOrElse('Error: division by zero')); // Output: 25
+```
+
+We took a new monad that initially held the value 2, and called the __chain__ method twice, passing a function that returned the monad itself.
+
+- __chain I__ - x = 2,  and __safeDivide__(10,x)__ would return the new monad __Maybe(5)__.
+- __chain II__ — the chain function will be called for __Maybe(5) Monad__, corresponding to x = 5. __safeDivide(100,5)__ will be called and the 
+  new monad __Maybe(25)__ will be returned.
+
+Finally, we log __result.getOrElse__ and try to __extract the wrapped value__ of the returned Maybe. If it is __null__, let’s output the corresponding message.
+
+
+## Example 2: List of users from the database
+
+Imagine you want to retrieve a list of users from the database. This function can be disabled if an error occurred during a connection to the database or if the query fails.
+Come on, let’s put it in Monad and handle the side effects that way.
+
+```ts title='database.ts'
+
+// Assume this function could fail due to a network error or other issue
+const getUsers = () => {
+	const users = [
+		{ name: 'Alice', email:'alice@example.com' },
+		{ name: 'Bob', email: 'bob@example.com' },
+		{ name: 'Charlie', email: 'charlie@example.com' }
+	];
+	return new Maybe(users);
+}
+
+// Retrieve the users and extract their names
+const names = getUsers()
+	.map(users => users.map(user => user.name))
+	.getOrElse([]);
+
+console.log(names);
+// Output: ['Alice', 'Bob', 'Charlie']
+```
+
+Since we don’t know if __getUsers()__ will return a list or it will fail, we should wrap its return value in a monad and
+return it like __Maybe(users)__.
+
+On it, we can already call __.map__ method which in turn looks and manages whether the value on which we want to call the callback 
+function exists or not. It returns either __Maybe(null)__ or __Maybe(['Alice', 'Bob', ’Charlies'])__.
+
+Finally, with __getOrElse([])__ we will try to open and __extract the wrapped value__ returned by __Maybe Monad__, and if it doesn’t exist, 
+return an empty list.
+
+Thanks for your attention!
