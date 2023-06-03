@@ -3,12 +3,15 @@
 import { useTheme } from 'next-themes';
 import { IconMoonFilled, IconBrightness2 } from '@tabler/icons-react';
 import { Switch } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 const ThemeManager = () => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { setTheme } = useTheme();
   const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    setTheme('light');
+  }, [setTheme]);
   const DarkIcon = () => (
     <div className="absolute translate-x-0 rounded-lg bg-white">
       <IconMoonFilled size={17} />
