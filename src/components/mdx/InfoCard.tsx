@@ -6,12 +6,12 @@ const InfoCard = (props: any) => {
     'border bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-4 w-full',
     {
       'border-red-200 dark:border-red-900': type === 'fail',
-      'border-emerald-200 dark:border-emerald-900': type === 'success',
+      'border-emerald-500 dark:border-emerald-900': type === 'success',
     }
   );
   return (
     <div className={cssClasses}>
-      <span>{`You might use ${title} if...`}</span>
+      <span className="text-gray-900 font-bold dark:text-white">{title}</span>
       <div className="mt-4">
         {messages.map((message: any) => (
           <div key={message} className="flex font-medium items-baseline mb-2">
