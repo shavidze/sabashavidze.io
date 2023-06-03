@@ -22,7 +22,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to left, #2980b9, rgb(var(--background-end-rgb)))
+  background: linear-gradient(to right, #2980b9, rgb(var(--background-end-rgb)))
     rgb(var(--background-start-rgb));
   position: relative;
 }
