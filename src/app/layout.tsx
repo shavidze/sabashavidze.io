@@ -34,6 +34,22 @@ export const metadata = {
     locale: 'en-US',
     type: 'website',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1, // allow to generate larger previews
+      'max-snippet': -1, // google can display longer text snippets for relevant pages
+    },
+  },
+  icons: {
+    shortcut: '/favicon.ico',
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+  },
 };
 
 export default function RootLayout({
