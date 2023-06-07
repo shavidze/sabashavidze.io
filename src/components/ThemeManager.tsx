@@ -37,7 +37,7 @@ const ThemeManager = () => {
           <button
             className={`${
               enabled ? 'bg-white' : 'bg-slate-600'
-            } p-[2px] cursor-pointer border motion-reduce:transition-none transition-all duration-[500ms] inline-flex h-6 w-11 items-center rounded-full focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2`}
+            } p-[2px] sticky top-20 cursor-pointer border motion-reduce:transition-none transition-all duration-[500ms] inline-flex h-6 w-11 items-center rounded-full focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2`}
           >
             {enabled ? <LightIcon /> : <DarkIcon />}
           </button>
