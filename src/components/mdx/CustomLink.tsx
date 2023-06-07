@@ -10,6 +10,10 @@ const CustomLink = (props: any) => {
     return <a {...props} />;
   }
 
-  return <Link {...props}>{children}</Link>;
+  return (
+    <Link target="_blank" href={href} {...props}>
+      {children}
+    </Link>
+  );
 };
 export default CustomLink;
