@@ -1,0 +1,286 @@
+---
+title: '🧐 🚀 Rendering Wars: Unveiling the Differences - CSR vs. SSR in ReactJS'
+publishedAt: '2023-06-07'
+summary: 'Unravel the mysteries of CSR and SSR with React, understanding their impact on performance'
+---
+
+Perhaps one of the most important and fundamental decisions is how to render our web application when we start architecting a
+new web app. That’s why today I want to talk about two ways of rendering, **client-side rendering** and **server-side rendering**.Of course,
+these two patterns are not the only ones, and we will discuss progressive rendering and other patters in the near future.
+
+
+
+## Terminology I will use 💬
+
+### 🎨 Rendering
+
+-  __SSR__ = Server-Side Rendering — rendering a client-side or universal app to HTML on the server.
+-  __CSR__ = Client-Side Rendering — rendering an app in a browser, generally using the DOM.
+-  __Rehydration__ - booting up JavaScript views on the client such that they reuse the server-rendered HTML’s DOM tree and data.
+
+### ⚡️ Performance
+
+- __FP__  = First Paint — the first time any pixel becomes visible to the user.
+- __FCP__ = First Contentful Paint — the time when requested content (article body, etc) becomes visible.
+- __TTI__ = Time To Interactive — the time at which a page becomes interactive (events wired up, etc).
+- __TTFB__ = Time to First Byte — the time between entering a link and the first bit of content coming in
+
+
+Let’s start with __CSR__. In such a rendering process, we have almost the empty html, and the the builded Javascript.
+ We are generating and building the Dom by loading this JS code into the browser.
+
+----
+
+# CSR 
+
+## Structure ⛩️ 🏗️:
+
+Consider we have HTML with an empty div tag and bundled js on the server. CSR rendering looks like this:
+
+![animation](https://miro.medium.com/v2/resize:fit:720/1*fK3CMzW1QNvNQGyH82PTYg.gif)
+
+The HTML consists of just a single root div tag and all the other things like displaying and updating the DOM are handled by JS.
+
+## 🚀 Bundles and Performance
+
+If we think about the performance, we first see that as the complexity of the page increase, the complexity and size of JS will increase as 
+well and the time to get it from the server will increase. That will cause a delay for the FCP and TTI of the page.
+
+<Image 
+  alt={`CSR Renreding Performance`}
+  src={`/images/csr-and-ssr-rendering/csr-performance.webp`}
+  width={1065}
+  height={557}
+/>
+
+## ⚖️ Pros and Cons
+
+### Pros: ✅
+
+- CSR provides a way to have SPA that supports pages to navigate without refreshing. This was a big deal for a long time and now it’s possible for websites to start acting like dynamic applications.
+
+### Cons: ❌
+
+There are a few pitfalls though:
+ - __Performance__. As the complexity of the page increase we have to wait more for JS to see the FCP.
+ - __SEO__. Just like user visitors, bots make requests to view the page. This is well known process as crawling. During the first 
+stage Googlebots crawling the source code of your page and indexes all the visible (`non javascript`) content. But we have nothing visible
+until the JS is executed to build the dom. During this rendering phase he will come again( `sometimes that time goes to months`) and now getting the real content of your page available for crawling and eventually adding it to the index.
+
+<Image
+  alt={`Crawlers indexing`}
+  src={`/images/csr-and-ssr-rendering/crawlers.png`}
+  width={1065}
+  height={557}
+/>
+
+Since performance issues are caused by the Javascript bundle size there are some approaches that improve the performance of CSR.
+ - __Lazy-Loading__. With lazy loading, we can avoid loading non-critical resources. This approach will reduce the initial page load time.
+ - __Agressive Code Splitting__.It helps us to create multiple bundles that can be loaded dynamically during runtime. 
+It also enables us to lazy load JS resources. Code splitting is supported by bundlers like [__Turbopack__](https://turbo.build/)
+or [__Webpack__](https://webpack.js.org/).
+
+ - __Caching with service workers__. It can be used to cache the application shell offline and increase the performance time.
+
+<Image
+  alt={`Service workers`}
+  src={`/images/csr-and-ssr-rendering/service-workers.webp`}
+  width={1065}
+  height={557}
+/>
+
+----
+
+# Server-Side Rendering
+
+
+Let’s take a look what is SSR. It’s the oldest method to generate the full HTML for the page content to be rendered during the
+user makes a request. For this implementation we need to build the html on the server side and send it to the browser so the browser 
+can easily build a FCP.
+
+
+![ssr-gif](https://miro.medium.com/v2/resize:fit:700/1*ijZNzXjr2m1ipr9oae8eDw.gif)
+
+The browser makes a request on the server and gets the HTML not just empty root but also generated with the content in it. 
+So the browser shows the content as soon as it’s possible. Now the browser starts downloading your bundle, and the user still sees the 
+content on the screen but it’s not interactive yet. Only after your bundle is downloaded, it attach event listeners to your HTML and becomes
+ interactive. This process we call __hydration__ or __rehydration__.
+
+## ⚖️ Pros and Cons
+
+### Pros: ✅
+
+Less Javascript enables the browser for quicker `FCP` and `TTI`.
+
+<Image
+  alt={`SSR Performace`}
+  src={`/images/csr-and-ssr-rendering/ssr-performance.webp`}
+  width={1065}
+  height={557}
+/>
+
+Since we are avoiding sending lots of Javascript to the Client FCP and users are just waiting for TTI. 
+When we have lots of UI elements on the page SSR has way less JS than CSR so the time to get the scripts is lesser even 
+if sometimes we have __FP=FCP=TTI.__
+
+- __SEO__ . Search engine bots are getting the content easily on the first stage so they now can index the page. So we now that we are 
+getting quite good SEO on the page.
+
+### Cons: ❌
+
+Sometimes we may have a slow __TTFB__. That would be a scenario when the user has a Slow network or the Server code is not optimized.
+
+Since all our code is not available on the client side then the frequent calls to the server cause full page reloads and sometimes 
+this will increase the time between interactions. Thus SPA is not possible with SSR.
+
+
+---
+
+__Let’s create simple React SSR app with Express.__
+
+---
+
+### Step: 1
+
+Create React application
+
+```bash title="bash"
+npx create-react-app ssr-react
+```
+
+### Step: 2
+
+Remove extra files in __src__ folder and just left __App.js and index.js__.
+
+### Step: 3
+
+Let’s write component : counter with increase and decrease methods.
+
+
+```js
+
+import React, { useState } from 'react';
+
+const App = ({ initialValue }) => {
+	const [count, setCount] = useState(initialValue);
+	return (
+	  <>
+		<div className="App">
+			<button onClick={() => setCount(count + 1)}>Increase</button>
+			<div style={{ margin: "20px" }}>{count}</div>
+			<button onClick={() => setCount(count - 1)}>Decrease</button>
+		</div>
+	  </>
+	);
+};
+
+export default App;
+
+```
+
+### Step: 4
+
+Now we want to render it server side. First we need a server so create a new folder server and add the Server.js file into it. 
+I will use express to create a server, let’s install it first.
+
+```bash title="bash"
+npm i express --save
+```
+
+Create a express server and listen it on port 3000.
+
+```js
+import express from 'express';
+const app = express();
+
+app.listen(3000, function () {
+  console.log('server running on 3000');
+});
+```
+
+### Step: 5
+
+No we have a server. What we need is to get the builded html file. We will render the App component and pass it to the response. 
+We need to serve out statice files as well.
+
+```js
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import App from '../src/App';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+const app = express();
+
+app.get("/page", async (req, res) => {
+  fs.readFile(path.resolve("./build/index.html"), "utf-8", (err, data) => {
+	
+	if (err) {
+	  return res.status(500).send("Error happened");
+	}
+
+	const html = `<div id="root">${ReactDOMServer.renderToString(
+		<App />
+	)}</div>`;
+
+	return res.send(data.replace('<div id="root"></div>', html));
+  });
+});
+
+app.use(express.static(path.resolve(\_\_dirname, "..", "build")));
+
+app.listen(3000, function () {
+console.log("server running on 3000");
+});
+
+```
+
+### Step:6
+
+So we read __index.html__ file from the built folder. Then we need to render the __App__ component on the server side, for this, we use __ReactDOMServer__ which provides the method to render the component on the server side. 
+Replace the empty div root with our rendered component da send it to the client.
+So we are using __JSX__ on the server side and need support for it, so we need to add Babel for it.
+
+```bash
+npm i @babel/preset-env @babel/preset-react @babel/register ignore-styles --save-dev
+```
+
+### Step: 7
+
+Add __index.js__ file side by __server.js__ and require these things into it and require __server.js__ on bottom of them.
+
+```js
+require("ignore-styles");
+
+require("@babel/register")({
+    ignore: [/(node_module)/],
+    presets: ["@babel/preset-env", "@babel/preset-react"],
+});
+
+require("./server");
+
+```
+
+### Step: 8
+On the frontend side, we don’t need __ReactDOM.render__ anymore since we have already rendered the __DOM__ from the server and now we need to 
+__hydrate__ it to register event listeners and etc. Now __index.js__ on the __src__ folder looks like this.
+
+```js
+import React, { StrictMode } from "react";
+import { hydrateRoot } from "react-dom/client";
+import App from "./App";
+
+hydrateRoot(document.getElementById("root"), <App initialValue={10} />);
+```
+
+### Step: 9
+
+Add the final run command in package.json file:
+
+```json
+    "ssr": "node server/index.js",
+```
+
+The first build our frontend by the command __npm run build__ and then start our server by the command __npm run ssr__.
+
+Thanks for your attention 🚀🖌️!
