@@ -1,5 +1,5 @@
 ---
-title: '🧐 🚀 Rendering Wars: Unveiling the Differences - CSR vs. SSR in ReactJS'
+title: '🔥⚔️ Rendering Wars: Unveiling the Differences - CSR vs. SSR in ReactJS'
 publishedAt: '2023-06-07'
 summary: 'Unravel the mysteries of CSR and SSR with React, understanding their impact on performance'
 ---
@@ -157,12 +157,13 @@ Remove extra files in __src__ folder and just left __App.js and index.js__.
 Let’s write component : counter with increase and decrease methods.
 
 
-```js
+```js title="src/App.js"
 
 import React, { useState } from 'react';
 
 const App = ({ initialValue }) => {
 	const [count, setCount] = useState(initialValue);
+	if (typeof window === 'undefined') return <></>;
 	return (
 	  <>
 		<div className="App">
@@ -189,7 +190,7 @@ npm i express --save
 
 Create a express server and listen it on port 3000.
 
-```js
+```js title="server/server.js"
 import express from 'express';
 const app = express();
 
@@ -203,7 +204,7 @@ app.listen(3000, function () {
 No we have a server. What we need is to get the builded html file. We will render the App component and pass it to the response. 
 We need to serve out statice files as well.
 
-```js
+```js title="server/server.js"
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
@@ -249,7 +250,7 @@ npm i @babel/preset-env @babel/preset-react @babel/register ignore-styles --save
 
 Add __index.js__ file side by __server.js__ and require these things into it and require __server.js__ on bottom of them.
 
-```js
+```js title="server/index.js"
 require("ignore-styles");
 
 require("@babel/register")({
@@ -265,7 +266,7 @@ require("./server");
 On the frontend side, we don’t need __ReactDOM.render__ anymore since we have already rendered the __DOM__ from the server and now we need to 
 __hydrate__ it to register event listeners and etc. Now __index.js__ on the __src__ folder looks like this.
 
-```js
+```js title="src/index.js"
 import React, { StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import App from "./App";
@@ -282,5 +283,8 @@ Add the final run command in package.json file:
 ```
 
 The first build our frontend by the command __npm run build__ and then start our server by the command __npm run ssr__.
+
+[__Source Code__](https://github.com/shavidze/ssr-react)
+
 
 Thanks for your attention 🚀🖌️!
