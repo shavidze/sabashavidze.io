@@ -7,11 +7,15 @@ import { Fragment, useEffect, useState } from 'react';
 
 const ThemeManager = () => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [enabled, setEnabled] = useState(false);
+  const [mount, setMount] = useState<boolean>(false);
   useEffect(() => {
-    setTheme('light');
-  }, [setTheme]);
+    if (!mount) {
+      setMount(true);
+    }
+    setEnabled(resolvedTheme === 'dark');
+  }, [mount, setEnabled, resolvedTheme]);
   const DarkIcon = () => (
     <div className="absolute translate-x-0 rounded-lg bg-white">
       <IconMoonFilled size={17} />
@@ -22,13 +26,15 @@ const ThemeManager = () => {
       <IconBrightness2 size={17} />
     </div>
   );
+  if (!mount) return <></>;
   return (
     <div className="absolute right-0">
       <Switch
         checked={enabled}
         onChange={() => {
           // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          enabled ? setTheme('light') : setTheme('dark');
+          const newTheme = enabled ? 'light' : 'dark';
+          setTheme(newTheme);
           setEnabled(!enabled);
         }}
         as={Fragment}
