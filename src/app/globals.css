@@ -34,9 +34,18 @@ body {
 .prose a {
   @apply no-underline;
 }
+.dark .prose hr {
+  @apply border-cyan-200;
+}
+.prose strong {
+  @apply text-lg;
+}
 .prose :where(code):not(:where([class~='not-prose'] *)) {
   font-size: 1rem;
   color: #555151;
+}
+.dark .prose :where(code):not(:where([class~='not-prose'] *)) {
+  color: #ffffff;
 }
 .prose :where(code):not(:where([class~='not-prose'] *))::before {
   content: '' !important;
