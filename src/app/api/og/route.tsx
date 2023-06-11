@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
       marginLeft: 190,
       marginRight: 190,
       display: 'flex',
+      transform: 'translateY(-15%)',
       fontSize: 130,
       fontFamily: 'Kaisei Tokumin',
       letterSpacing: '-0.05em',
