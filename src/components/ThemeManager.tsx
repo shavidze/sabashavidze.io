@@ -1,8 +1,6 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { IconMoonFilled, IconBrightness2 } from '@tabler/icons-react';
-import { Switch } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
 
 const ThemeManager = () => {
