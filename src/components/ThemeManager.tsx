@@ -21,7 +21,12 @@ const ThemeManager = () => {
   if (!mount) return <></>;
   return (
     <div className="absolute right-0">
-      <Switch setTheme={setTheme} setEnabled={setEnabled} enabled={enabled} />
+      <Switch
+        setTheme={setTheme}
+        setEnabled={setEnabled}
+        enabled={enabled}
+        duration={750}
+      />
     </div>
   );
 };
