@@ -7,6 +7,7 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx}',
     './posts/**/*.mdx',
   ],
+  safelist: ['duration-[500ms]'],
   theme: {
     extend: {
       fontFamily: { serif: ['var(--font-kaisei)'] },
