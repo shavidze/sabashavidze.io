@@ -57,7 +57,6 @@ const Switch: FC<Props> = ({
   };
 
   const trackClasses = `w-12 h-6 ring-[1px] rounded-2xl transition duration-800 cursor-pointer`;
-
   const transitionDuration = switchStyles({ duration });
   const thumbClasses = `aspect-square transition 0 h-6 ${transitionDuration} rounded-2xl ${switchStyles(
     {}
