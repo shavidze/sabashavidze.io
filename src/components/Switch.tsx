@@ -62,6 +62,7 @@ const Switch: FC<Props> = ({
     setTheme(newTheme);
     setEnabled(!enabled);
   };
+
   // A11 Input Handlers
   const handleKeyEvent = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (['Enter', 'Space'].includes(event.code)) {
