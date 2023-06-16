@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { cva, VariantProps } from 'class-variance-authority';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, KeyboardEventHandler, SetStateAction } from 'react';
 
 const switchStyles = cva([], {
   variants: {
@@ -57,16 +57,28 @@ const Switch: FC<Props> = ({
   const thumbClasses = ` ${cTransition} ${cThumb} ${height}  ${thumbBg} ${thumbPosition} rounded-2xl`;
   const iconClasses = 'w-[70%] aspect-square';
 
+  const onToggleHandler = (): void => {
+    const newTheme = enabled ? 'light' : 'dark';
+    setTheme(newTheme);
+    setEnabled(!enabled);
+  };
+  // A11 Input Handlers
+  const handleKeyEvent = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (['Enter', 'Space'].includes(event.code)) {
+      event.preventDefault();
+      event.currentTarget?.click();
+    }
+  };
+
   return (
     <div
       aria-label="Switch"
+      tabIndex={0}
       aria-checked={!enabled}
       title={`Switch ${enabled ? 'Dark' : 'Light'} Mode`}
-      onClick={() => {
-        const newTheme = enabled ? 'light' : 'dark';
-        setTheme(newTheme);
-        setEnabled(!enabled);
-      }}
+      onKeyDown={handleKeyEvent}
+      onClick={onToggleHandler}
+      role="switch"
       className={`switch-track ${trackClasses}`}
     >
       <div className={`switch-thumb ${thumbClasses}`}>
