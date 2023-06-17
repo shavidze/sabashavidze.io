@@ -67,7 +67,7 @@ const Switch: FC<Props> = ({
     <div
       aria-label="Switch"
       tabIndex={0}
-      aria-checked={!enabled}
+      aria-checked={enabled}
       title={`Switch ${enabled ? 'Dark' : 'Light'} Mode`}
       onKeyDown={handleKeyEvent}
       onClick={onSwitch}
@@ -80,7 +80,7 @@ const Switch: FC<Props> = ({
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
         >
-          <path d={enabled ? svgPath.moon : svgPath.sun} />
+          <path d={enabled ? svgPath.sun : svgPath.moon} />
         </svg>
       </div>
     </div>
