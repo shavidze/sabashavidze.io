@@ -16,8 +16,7 @@ const switchStyles = cva([], {
 interface SwitchStylesProps extends VariantProps<typeof switchStyles> {}
 interface Props extends SwitchStylesProps {
   enabled: boolean;
-  setTheme: (theme: string) => void;
-  setEnabled: Dispatch<SetStateAction<boolean>>;
+  onSwitch: () => void;
   bgLight?: string;
   bgDark?: string;
   fillLight?: string;
@@ -27,10 +26,9 @@ interface Props extends SwitchStylesProps {
 }
 const Switch: FC<Props> = ({
   enabled,
-  setTheme,
-  setEnabled,
   width = 'w-12',
   height = 'h-6',
+  onSwitch,
   bgLight = 'bg-surface-50',
   bgDark = 'bg-surface-900',
   fillLight = 'fill-surface-50',
@@ -57,12 +55,6 @@ const Switch: FC<Props> = ({
   const thumbClasses = ` ${cTransition} ${cThumb} ${height}  ${thumbBg} ${thumbPosition} rounded-2xl`;
   const iconClasses = 'w-[70%] aspect-square';
 
-  const onToggleHandler = (): void => {
-    const newTheme = enabled ? 'light' : 'dark';
-    setTheme(newTheme);
-    setEnabled(!enabled);
-  };
-
   // A11 Input Handlers
   const handleKeyEvent = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (['Enter', 'Space'].includes(event.code)) {
@@ -78,7 +70,7 @@ const Switch: FC<Props> = ({
       aria-checked={!enabled}
       title={`Switch ${enabled ? 'Dark' : 'Light'} Mode`}
       onKeyDown={handleKeyEvent}
-      onClick={onToggleHandler}
+      onClick={onSwitch}
       role="switch"
       className={`switch-track ${trackClasses}`}
     >
