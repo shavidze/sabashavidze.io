@@ -17,16 +17,15 @@ const ThemeManager = () => {
     setEnabled(resolvedTheme === 'dark');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mount]);
-
+  const handleSwitch = () => {
+    const newTheme = enabled ? 'light' : 'dark';
+    setTheme(newTheme);
+    setEnabled(!enabled);
+  };
   if (!mount) return <></>;
   return (
     <div className="absolute right-0">
-      <Switch
-        setTheme={setTheme}
-        setEnabled={setEnabled}
-        enabled={enabled}
-        duration={750}
-      />
+      <Switch onSwitch={handleSwitch} enabled={enabled} duration={750} />
     </div>
   );
 };
