@@ -76,7 +76,7 @@ We know from algebra that `(f ◦ g)(x) = f (g(x))`, let's rewrite the compose f
 	   ,x);
 ```
 
-No, let's play with this `pipe` and compose some functions.
+No, let's play with this `compose` and compose some functions.
 
 ```js title="composition-example.js"
 	const toUpper = str => str.toUpperCase();
@@ -144,13 +144,13 @@ As we said functor  implements a map function.
 
 	```js title="map-example.js"
 		const box = Box(2);
-		const newBox = box.map(x => x \* 2); // Box(4)
+		const newBox = box.map(x => x * 2); // Box(4)
 	```
 - ✔️ __fold__: I implemented a `fold` method just to extract the value from functor.
 
     ```js title="fold-example.js"
 		const box = Box(2);
-		const result = box.map(x => x \* 2).fold(x => x); // 4
+		const result = box.map(x => x * 2).fold(x => x); // 4
 	```
 
 
@@ -198,7 +198,7 @@ const Box = (x) => ({
 });
 
 const box = Box(2);
-const newBox = box.chain(x => Box(x \* 2)); // Box(4)
+const newBox = box.chain(x => Box(x * 2)); // Box(4)
 
 ```
 You see that The chain and fold methods in a monad do have similar structures, 
