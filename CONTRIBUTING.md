@@ -67,7 +67,7 @@ By contributing to the sabashavidze.io project, you agree that your contribution
 
 ## Contact
 
-If you have any questions or need further assistance, feel free to reach out through the contact form on [sabashavidze.io](https://sabashavidze.io) or connect with me on [LinkedIn](https://linkedin.com/in/your-linkedin-profile) or [Twitter](https://twitter.com/your-twitter-profile).
+If you have any questions or need further assistance, feel free to reach out through the contact form on [sabashavidze.io](https://sabashavidze.io) or connect with me on [LinkedIn](https://www.linkedin.com/in/saba-shavidze-1b395094/) or [Twitter](https://twitter.com/SShavi1).
 
 We appreciate your contributions to sabashavidze.io and look forward to your involvement!
 
