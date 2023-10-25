@@ -132,13 +132,13 @@ if (cluster.isPrimary) {
   });
 } else {
   const server = createServer((req, res) => {
-  // Simulate CPU-intensive work
-  let i = 1e7;
+    // Simulate CPU-intensive work
+    let i = 1e7;
     while (i > 0) {
-      i--;
-  }
-  console.log(`Handling request from ${pid}`);
-  res.end(`Hello from ${pid}\n`);
+        i--;
+    }
+    console.log(`Handling request from ${pid}`);
+    res.end(`Hello from ${pid}\n`);
 });
 
 // Start the server and listen on port 8080
