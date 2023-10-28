@@ -27,6 +27,10 @@ body {
   position: relative;
 }
 
+.prose {
+  max-width: 900px;
+  width: 100%;
+}
 .prose > p {
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
