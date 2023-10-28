@@ -46,3 +46,192 @@ summary: '🔥 ⚔️ Unravel the mysteries of Architecture'
 
 <InfoCard type='success' messages={['http-proxy - გავამარტივოთ reverse-proxy/load-balancer-ის შექმნა ნოუდზე','portfinder: ამას ახსნა არ უნდა,სახელი გვეუბნება','consul: ინტერაქცია რომ გვქონდეს Consul-თან']} title='ბიბლიოთეკები, რომლებსაც გამოვიყენებ'/>
 
+
+მოდი გადავიდეთ იმპლემენტაციის ნაწილზე უშუალოდ. 
+
+## Setting up the Service For Registration
+
+დავწეროთ სერვის რეგისტრატორი, ამ შემთხვევაში სერვისის სახელს მივიღებთ `command-line`-დან.
+მოდი დავიწყოთ და თან ავხსნათ. 
+
+```js title="app.js"
+import { createServer } from 'http';
+import Consul from 'consul';
+import portfinder from 'portfinder';
+import { nanoid } from 'nanoid';
+
+
+// დავიჭიროთ სერვისის ტიპი, რომელსაც ვარეგისტრირებთ
+const serviceType = process.argv[2];
+
+const { pid } = process;
+
+```
+
+
+ახლა გვინდა, რომ დავარეგისტრიროთ სერვისი, რომლის ტიპი ვიცით(სახელიც შეგვიძლია ვთქვათ), გვჭირდება უკვე 
+ინიციალიზაცია გავუკეთოთ კონსულს,გავატანოთ უნიკალური `id`, სახელი ამ სერვისის, მოვძებნოთ თავისუფალი პორტი რომელზეც გვინდა ჩვენი ინსტანსი გაეშვას, და ტეგები, რომელიც არ არის აუცილებელი მოთხოვნა,
+ძირითადად ტეგების გამოყენების მიზანია კატეგორიზაცია გარკვეული სერვისების, გაფილტვრა შემდგომ მარტივად და დამატებითი ინფორმაციის გატანა, რა გარემოშია გაშვებული ეს სერვისი  და ა.შ. აღარ ჩავალ სიღრმეებში.
+ესეიგი ჩვენს გასაშვებ ინსტანსს მოვუძებნეთ პორტი, ხოლო კონსულს გავაატნეთ მისი, როგორც სერვისის `სახელი`, `id`, `address`, `port`,`tags`.
+მოდი გავაგრძელოთ...
+
+```js title="app.js"
+import { createServer } from 'http';
+import Consul from 'consul';
+import portfinder from 'portfinder';
+import { nanoid } from 'nanoid';
+
+// დავიჭიროთ სერვისის ტიპი, რომელსაც ვარეგისტრირებთ
+const serviceType = process.argv[2];
+
+const { pid } = process;
+
+async function main() {
+	const consulClient = new Consul();
+
+	// ① Discover a free port in the system and generate a unique service ID
+	const port = await portfinder.getPortPromise();
+	const address = process.env.ADDRESS || "localhost";
+	const serviceId = nanoid();
+	function registerService() {
+		consulClient.agent.service.register(
+			{
+				id: serviceId,
+				name: serviceType,
+				address,
+				port,
+				tags: [serviceType],
+			},
+			() => {
+				console.log(`${serviceType} registered successfully`);
+			}
+		);
+	}
+
+```
+
+ეხლა დავწეროთ ამ სერვისი ამოღება,წაშლას კონსულის რეგისტრიდან.მთავარი მიზანი ამ ფუნცქიის გამოყენების იქნება ის,რომ თუ საჭირო გახდა 
+სერვისი გამორთვა ან თუ ერორი მოხდა,ან რაიმე ექსეფშენი გაისროლა ჩვენი სერვისის პროცესმა, უნდა წაიშალოს ეს სერვისი კონსულიდან სანამ თავად პროცესი მოკვდება.
+
+
+```js title="app.js"
+import { createServer } from 'http';
+import Consul from 'consul';
+import portfinder from 'portfinder';
+import { nanoid } from 'nanoid';
+
+// დავიჭიროთ სერვისის ტიპი, რომელსაც ვარეგისტრირებთ
+const serviceType = process.argv[2];
+
+const { pid } = process;
+
+async function main() {
+	const consulClient = new Consul();
+
+	// ① Discover a free port in the system and generate a unique service ID
+	const port = await portfinder.getPortPromise();
+	const address = process.env.ADDRESS || "localhost";
+	const serviceId = nanoid();
+	function registerService() {
+		consulClient.agent.service.register(
+			{
+				id: serviceId,
+				name: serviceType,
+				address,
+				port,
+				tags: [serviceType],
+			},
+			() => {
+				console.log(`${serviceType} registered successfully`);
+			}
+		);
+	}
+
+	function unregisterService(err) {
+		err && console.error(err);
+		onsole.log(`deregistering ${serviceId}`);
+		consulClient.agent.service.deregister(serviceId, () => {
+			process.exit(err ? 1 : 0);
+		});
+	}
+
+
+	// დავარეგისტრიროთ
+	process.on("exit", unregisterService);
+	process.on("uncaughtException", unregisterService);
+	process.on("SIGINT", unregisterService);
+
+```
+
+ახლა კი ბოლო ეტაპი, შევქმნათ `HTTP` სერვერი, ნოუდის `http` მოდულის გამოყენებით, დავსვათ ჩვენს პორტზე და მისამართზე, და სიმულაცია გავაკეთოთ 
+თითქოს რექვესტები შემოდის ამ მისამართზე.
+
+
+
+```js title="app.js"
+import { createServer } from 'http';
+import Consul from 'consul';
+import portfinder from 'portfinder';
+import { nanoid } from 'nanoid';
+
+// დავიჭიროთ სერვისის ტიპი, რომელსაც ვარეგისტრირებთ
+const serviceType = process.argv[2];
+
+const { pid } = process;
+
+async function main() {
+	const consulClient = new Consul();
+
+	// ① Discover a free port in the system and generate a unique service ID
+	const port = await portfinder.getPortPromise();
+	const address = process.env.ADDRESS || "localhost";
+	const serviceId = nanoid();
+	function registerService() {
+		consulClient.agent.service.register(
+			{
+				id: serviceId,
+				name: serviceType,
+				address,
+				port,
+				tags: [serviceType],
+			},
+			() => {
+				console.log(`${serviceType} registered successfully`);
+			}
+		);
+	}
+
+	function unregisterService(err) {
+		err && console.error(err);
+		onsole.log(`deregistering ${serviceId}`);
+		consulClient.agent.service.deregister(serviceId, () => {
+			process.exit(err ? 1 : 0);
+		});
+	}
+
+
+	// დავარეგისტრიროთ დერეგისტრირეების ფუნქცია
+	process.on("exit", unregisterService);
+	process.on("uncaughtException", unregisterService);
+	process.on("SIGINT", unregisterService);
+
+
+	const server = createServer((req, res) => {
+		let i = 1e7;
+		while (i > 0) {
+		  i--;
+		}
+		console.log(`Handling request from ${pid}`);
+		res.end(`${serviceType} response from ${pid}\n`);
+	});
+
+	server.listen(port, address, () => {
+		registerService();
+		console.log(`Started ${serviceType} at ${pid} on port ${port}`);
+	});
+```
+
+ეს იყო ჩვენი ინსტანსის როგორც სერვისის რეგისტრაციაა და მისი დაჯენა გამოყოფილ უნიკალურ პორტსა და მისამართზე.
+
+ახლა, გადავიდეთ მეორე ნაწილზე. დავწეროთ ლოად-ბალანსერი, რომელიც შემომავალ რექვესტებს გადაანაწილებს სხვადასხხვა სერვისებზე,იმის მიხედვით
+თუ რ
