@@ -237,6 +237,7 @@ async function main() {
 თუ რა იქნება როუტის პრეფიქსი.
 
 
+
 ## Setting up the Load-Balancer
 
 
@@ -267,6 +268,8 @@ const routing = [
 ახლა უკვე შეგვიძლია, კონსულის კლიენტის ინიციალიზია, რომ მივწდეთ ჩვენთვის სასურველ სერვის და `httpProxy` ბიბლიოთეკის გამოყენებით,
 გადავამისამართოთ შემომავალი რექვესტი შესაბამის ინსტანზე, რომელსაც დააბრუნებს ჩვენი `Consule`-ის კლიენტი, შემომავალი რექვესტის როუტის პრეფიქსის
 მიხედვით,რაც ზემოთ უკვე ვახსენეთ.
+
+
 
 
 
@@ -320,6 +323,7 @@ const server = createServer(async (req, res) => {
 	}
 });
 
+
 // Start the load balancer on port 8080
 server.listen(8080, () => console.log("Load balancer started on port 8080"));
 
@@ -339,7 +343,6 @@ server.listen(8080, () => console.log("Load balancer started on port 8080"));
 
 ბოლოს კი ჩვენი ლოად ბალანსერი გავუშათ, 8080 პორტზე და ვუსმინოთ შემომავალ რექვესტებს.
 
-აქ არის საბოლოო დასრულებული ვერსია.
 
 მოდი გავტესტოთ რაღაცეები,დავსტარტოთ ჯერ ლოად-ბალანსერი:
 
@@ -362,3 +365,6 @@ forever start -f --killSignal=SIGINT src/load-balancer.js
 ```bash
 curl localhost:8080/api
 ```
+
+მადლობა ყურადღებისთვის.
+[სრული კოდის ლინკი](https://github.com/shavidze/dynamic-load-balancer)
