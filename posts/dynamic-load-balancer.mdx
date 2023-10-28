@@ -234,4 +234,109 @@ async function main() {
 ეს იყო ჩვენი ინსტანსის როგორც სერვისის რეგისტრაციაა და მისი დაჯენა გამოყოფილ უნიკალურ პორტსა და მისამართზე.
 
 ახლა, გადავიდეთ მეორე ნაწილზე. დავწეროთ ლოად-ბალანსერი, რომელიც შემომავალ რექვესტებს გადაანაწილებს სხვადასხხვა სერვისებზე,იმის მიხედვით
-თუ რ
+თუ რა იქნება როუტის პრეფიქსი.
+
+
+## Setting up the Load-Balancer
+
+
+პირველ რიგში, დავარეგისტრიროთ როუტები, ანუ რომელ მისამართზე, რომელ სერვის უნდა მიმართოს ლოად ბალანსერმა.
+
+```js title="load-balancer.js"
+import { createServer } from 'http';
+import httpProxy from 'http-proxy';
+import Consul from 'consul';
+
+
+// ① განვსაზვროთ როუტები ლოად ბალანსერისთვის
+const routing = [
+	{
+	  path: "/api", //რექვესტი რომელის დაიწება /api მისამართით, გადამისამართდება api-service-ზე
+	  service: "api-service",
+	  index: 0,
+	},
+	{
+	  path: "/", // ამ მისამართით დაწებული რექვესტი კი გადამისამართდება webapp-service-ზე.
+	  service: "webapp-service",
+	  index: 0,
+	},
+];
+
+```
+
+ახლა უკვე შეგვიძლია, კონსულის კლიენტის ინიციალიზია, რომ მივწდეთ ჩვენთვის სასურველ სერვის და `httpProxy` ბიბლიოთეკის გამოყენებით,
+გადავამისამართოთ შემომავალი რექვესტი შესაბამის ინსტანზე, რომელსაც დააბრუნებს ჩვენი `Consule`-ის კლიენტი, შემომავალი რექვესტის როუტის პრეფიქსის
+მიხედვით,რაც ზემოთ უკვე ვახსენეთ.
+
+
+
+```js title="load-balancer.js"
+import { createServer } from 'http';
+import httpProxy from 'http-proxy';
+import Consul from 'consul';
+
+// ① განვსაზვროთ როუტები ლოად ბალანსერისთვის
+const routing = [
+  {
+    path: '/api', //რექვესტი რომელის დაიწება /api მისამართით, გადამისამართდება api-service-ზე
+    service: 'api-service',
+    index: 0,
+  },
+  {
+    path: '/', // ამ მისამართით დაწებული რექვესტი კი გადამისამართდება webapp-service-ზე.
+    service: 'webapp-service',
+    index: 0,
+  },
+];
+
+const consulClient = new Consul();
+
+const proxy = httpProxy.createProxyServer();
+const server = createServer(async (req, res) => {
+	//1️⃣
+	const route = routing.find((route) => req.url.startsWith(route.path));
+
+	try {
+		2️⃣
+		const serviseList = await consulClient.agent.service.list();
+		const instances = Object.values(serviseList).filter((service) =>
+			service.Tags.includes(route.service)
+		);
+		if (!instances.length) {
+			res.writeHead(502);
+			return res.end("Bad gateway");
+		}
+
+		3️⃣
+		route.index = (route.index + 1) % instances.length;
+		const instance = instances[route.index];
+		const target = `http://${instance.Address}:${instance.Port}`;
+		proxy.web(req, res, { target });
+	} catch (error) {
+		// If there's an error or no servers are found, return a "Bad gateway" error
+		console.error("Error fetching services", error);
+		res.writeHead(502);
+		return res.end("Bad gateway");
+	}
+});
+
+// Start the load balancer on port 8080
+server.listen(8080, () => console.log("Load balancer started on port 8080"));
+
+```
+
+ესეიგი რა დავამატეთ,
+
+- 1️⃣ვნახეთ ის როუტი, რომელიც იწყება შემომავალი რექვსეტის ურლ-is `path`-ით.
+
+- 2️⃣ წამოვიღოთ ყველა სერვისის ლისტი, და უშულაოდ იმ სერვისით გავფილტროთ რომელიც როუტის სერვისს ემთხვევა.ამ შემთხვევაში ვფილტრავ ტეგით,
+    ისე შეგვიძია ჩვენს შემთხვევაში `name`-ითაც გაგვეფილტრა. როგორც ვახსენე ზემოთ, ტეგები გამოიყენება რომ კატეგორიებად დავყოთ, ე.წ.ლეიბლები
+    დავადოთ სერვისებს, და მათით გაფილტვრა უფრო მეტად მიზანშეწონილია. თუ ეგეთი სერვისის ინსტანსი/ინსტანსები არ არსებობს ვისვრით 502 ერორს,ანუ არასწორ როუტს მიმართავენ.
+- 3️⃣ ახლა რაც შეეხება, თუ ვიპოვნეთ ინსტანსები ამ ტიპის სერვისის, როგორ ვანაწილებთ ამ შემთხვევაში დატვირთვას. მე ვიყენებ აქ რაუნდ-რობინის ალგორითმს. თუ მაქვს ერთი სერვისის
+7 ინსტანსი, თითოეულ ჯერზე `route.index = (route.index + 1)% 7) = 1` ვაახლებ ინდექს, და ასე ვივლი წრეზე: 1,2,3,4,5,6,0,1,2... შესაბამისად ტრეფიკის გადანაწილება
+მექნება თანაბარი.
+
+
+ბოლოს კი ჩვენი ლოად ბალანსერი გავუშათ, 8080 პორტზე და ვუსმინოთ შემომავალ რექვესტებს.
+
+აქ არის საბოლოო დასრულებული ვერსია, 
