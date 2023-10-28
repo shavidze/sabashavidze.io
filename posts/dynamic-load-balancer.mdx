@@ -251,12 +251,12 @@ import Consul from 'consul';
 // ① განვსაზვროთ როუტები ლოად ბალანსერისთვის
 const routing = [
 	{
-	  path: "/api", //რექვესტი რომელის დაიწება /api მისამართით, გადამისამართდება api-service-ზე
+	  path: "/api", //რექვესტი რომელის დაიწყება /api მისამართით, გადამისამართდება api-service-ზე
 	  service: "api-service",
 	  index: 0,
 	},
 	{
-	  path: "/", // ამ მისამართით დაწებული რექვესტი კი გადამისამართდება webapp-service-ზე.
+	  path: "/", // ამ მისამართით დაწყებული რექვესტი კი გადამისამართდება webapp-service-ზე.
 	  service: "webapp-service",
 	  index: 0,
 	},
@@ -278,12 +278,12 @@ import Consul from 'consul';
 // ① განვსაზვროთ როუტები ლოად ბალანსერისთვის
 const routing = [
   {
-    path: '/api', //რექვესტი რომელის დაიწება /api მისამართით, გადამისამართდება api-service-ზე
+    path: '/api', //რექვესტი რომელის დაიწყება /api მისამართით, გადამისამართდება api-service-ზე
     service: 'api-service',
     index: 0,
   },
   {
-    path: '/', // ამ მისამართით დაწებული რექვესტი კი გადამისამართდება webapp-service-ზე.
+    path: '/', // ამ მისამართით დაწყებული რექვესტი კი გადამისამართდება webapp-service-ზე.
     service: 'webapp-service',
     index: 0,
   },
@@ -297,7 +297,7 @@ const server = createServer(async (req, res) => {
 	const route = routing.find((route) => req.url.startsWith(route.path));
 
 	try {
-		2️⃣
+		//2️⃣
 		const serviseList = await consulClient.agent.service.list();
 		const instances = Object.values(serviseList).filter((service) =>
 			service.Tags.includes(route.service)
@@ -307,7 +307,7 @@ const server = createServer(async (req, res) => {
 			return res.end("Bad gateway");
 		}
 
-		3️⃣
+		//3️⃣
 		route.index = (route.index + 1) % instances.length;
 		const instance = instances[route.index];
 		const target = `http://${instance.Address}:${instance.Port}`;
@@ -339,4 +339,26 @@ server.listen(8080, () => console.log("Load balancer started on port 8080"));
 
 ბოლოს კი ჩვენი ლოად ბალანსერი გავუშათ, 8080 პორტზე და ვუსმინოთ შემომავალ რექვესტებს.
 
-აქ არის საბოლოო დასრულებული ვერსია, 
+აქ არის საბოლოო დასრულებული ვერსია.
+
+მოდი გავტესტოთ რაღაცეები,დავსტარტოთ ჯერ ლოად-ბალანსერი:
+
+```bash
+forever start -f --killSignal=SIGINT src/load-balancer.js
+```
+
+ახლა,მოდი გავუშვათ პარალელურად 2 სერვისი `api-service`-სთვის და 1 სერვისი `webapp-service`-სთვის, ვიყენებთ `forever` ბიბლიოთეკას:
+
+```bash
+	forever start -f --killSignal=SIGINT src/app.js api-service    
+	forever start -f --killSignal=SIGINT src/app.js api-service    
+	forever start -f --killSignal=SIGINT src/app.js webapp-service
+```
+
+ლოად ბალანსერი ავტომატურად დაინახასვ ახალ ინსტანსებს რაც დაისტარტა და დაიწყებს რექვესტების გადანაწილებას.
+
+ახლა, რომ გავუშვათ ორჯერ `api`-ზე რექევსტი, დავინახავთ რომ სხვადასხვა ინსტანსი დაიჭერს.
+
+```bash
+curl localhost:8080/api
+```
